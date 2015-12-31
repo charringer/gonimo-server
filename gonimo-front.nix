@@ -1,9 +1,10 @@
 {
   network.description = "gonimo front servers";
   gonimo-front =
-    { config, pkgs, stdenv, fetchurl, ...}:
+    { config, pkgs, ...}:
     let
-
+      stdenv = pkgs.stdenv;
+      fetchurl = pkgs.fetchurl;
       gonimo-front-compiled =
         let version = "0.1";
         in
@@ -30,6 +31,6 @@
             index index.html;
             }
         '';
-        networking.firewall.allowedTCPPorts = [ 80 443 ];
+        networking.firewall.allowedTCPPorts = [ 22 80 443 ];
       };
 }

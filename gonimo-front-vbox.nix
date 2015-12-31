@@ -3,6 +3,6 @@
     { config, pkgs, ...}:
     {
       deployment.targetEnv = "virtualbox";
-      deployment.virtualMemorySize = 1024;
+      deployment.virtualbox.memorySize = 1024; # megabytes
     };
 }
