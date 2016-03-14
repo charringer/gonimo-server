@@ -1,6 +1,6 @@
 {
-  network.description = "gonimo front servers";
-  gonimo-front =
+  network.description = "gonimo servers";
+  baby.gonimo.com =
     { config, pkgs, ...}:
     let
       stdenv = pkgs.stdenv;
@@ -26,7 +26,7 @@
         services.nginx.httpConfig = ''
             server {
             listen 80;
-            server_name gonimo.com;
+            server_name baby.gonimo.com;
             root ${gonimo-front-compiled};
             index index.html;
             }
