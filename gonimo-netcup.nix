@@ -1,5 +1,5 @@
 {
-  baby.gonimo.com =
+  baby =
     { config, pkgs, ...}:
     {
       deployment.targetEnv = "none";

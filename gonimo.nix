@@ -1,6 +1,6 @@
 {
   network.description = "gonimo servers";
-  baby.gonimo.com =
+  baby =
     { config, pkgs, ...}:
     let
       stdenv = pkgs.stdenv;
