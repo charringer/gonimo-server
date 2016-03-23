@@ -32,5 +32,13 @@
             }
         '';
         networking.firewall.allowedTCPPorts = [ 22 80 443 ];
-      };
+
+	services.postfix = {
+	  enable = true;
+	  origin = "$mydomain";
+	  domain = "gonimo.com";
+	  rootAlias = "georg.pichler@gmail.com";
+	  hostname = "baby.gonimo.com";
+	};
+    };
 }
