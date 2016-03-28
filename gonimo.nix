@@ -25,13 +25,35 @@
         services.nginx.enable = true;
         services.nginx.httpConfig = ''
             server {
-            listen 80;
-            server_name baby.gonimo.com;
-            root ${gonimo-front-compiled};
-            index index.html;
+              listen 80;
+              server_name baby.gonimo.com;
+	      root ${gonimo-front-compiled};
+
+	      location / {
+                index index.html;
+	      }
+
+	      location /.well-known/acme-challenge {
+      	        root /var/www/challenges;
+    	      }
             }
         '';
         networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+
+	security.acme.certs."baby.gonimo.com" = {
+	  webroot = "/var/www/challenges";
+	  email = "georg.pichler@gmail.com";
+	};
+
+	security.acme.certs."www.gonimo.com" = {
+	  webroot = "/var/www/challenges";
+	  email = "georg.pichler@gmail.com";
+	};
+
+	security.acme.certs."gonimo.com" = {
+	  webroot = "/var/www/challenges";
+	  email = "georg.pichler@gmail.com";
+	};
 
 	services.postfix = {
 	  enable = true;
