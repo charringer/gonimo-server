@@ -24,13 +24,42 @@
     {
         services.nginx.enable = true;
         services.nginx.httpConfig = ''
+	    server {
+	      listen 443 ssl;
+	      server_name www.gonimo.com;
+	      ssl_certificate /var/lib/acme/www.gonimo.com/fullchain.pem;
+	      ssl_certificate_key /var/lib/acme/www.gonimo.com/key.pem;
+	      # To avoid downgrade attacks; eventually we should change it to:
+	      #add_header Strict-Transport-Security "max-age=31536000";
+	      # (1 year); for now just one week (testing)
+	      add_header Strict-Transport-Security "max-age=604800";
+	      root ${gonimo-front-compiled};
+	    }
+
+   	    server {
+	      listen 443 ssl;
+	      server_name gonimo.com;
+	      ssl_certificate /var/lib/acme/gonimo.com/fullchain.pem;
+	      ssl_certificate_key /var/lib/acme/gonimo.com/key.pem;
+	      add_header Strict-Transport-Security "max-age=604800";
+	      root ${gonimo-front-compiled};
+	    }
+	      
+   	    server {
+	      listen 443 ssl;
+	      server_name baby.gonimo.com;
+	      ssl_certificate /var/lib/acme/baby.gonimo.com/fullchain.pem;
+	      ssl_certificate_key /var/lib/acme/baby.gonimo.com/key.pem;
+	      add_header Strict-Transport-Security "max-age=604800";
+	      root ${gonimo-front-compiled};
+	    }
+	      
             server {
               listen 80;
-              server_name baby.gonimo.com;
-	      root ${gonimo-front-compiled};
+              server_name www.gonimo.com;
 
 	      location / {
-                index index.html;
+	        return 301 https://$server_name$request_uri;
 	      }
 
 	      location /.well-known/acme-challenge {
@@ -43,16 +72,19 @@
 	security.acme.certs."baby.gonimo.com" = {
 	  webroot = "/var/www/challenges";
 	  email = "georg.pichler@gmail.com";
+	  postRun = "systemctl reload nginx.service";
 	};
 
 	security.acme.certs."www.gonimo.com" = {
 	  webroot = "/var/www/challenges";
 	  email = "georg.pichler@gmail.com";
+ 	  postRun = "systemctl reload nginx.service";
 	};
 
 	security.acme.certs."gonimo.com" = {
 	  webroot = "/var/www/challenges";
 	  email = "georg.pichler@gmail.com";
+  	  postRun = "systemctl reload nginx.service";
 	};
 
 	services.postfix = {
