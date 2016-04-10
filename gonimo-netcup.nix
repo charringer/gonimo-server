@@ -20,6 +20,7 @@
 	};
 	
       services.openssh.enable = true;
-      networking.firewall.allowPing = true;
+      networking.interfaces.enp0s3.ipv6Address = "2a03:4000:6:1b3::1";
+
     };
 }

@@ -22,6 +22,11 @@
          };
     in
     {
+        environment.systemPackages = with pkgs; [htop emacs24-nox];
+
+	networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+	networking.firewall.allowPing = true;
+		
         services.nginx.enable = true;
         services.nginx.httpConfig = ''
 	    server {
@@ -67,7 +72,6 @@
     	      }
             }
         '';
-        networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
 	security.acme.certs."baby.gonimo.com" = {
 	  webroot = "/var/www/challenges";
