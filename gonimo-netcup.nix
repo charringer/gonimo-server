@@ -20,7 +20,7 @@
 	};
 	
       services.openssh.enable = true;
-      networking.interfaces.enp0s3.ipv6Address = "2a03:4000:6:1b3::1";
-
+      networking.interfaces.enp0s3.ipv6Address = "2a03:4000:6:1b3::1000";
+      networking.interfaces.enp0s3.ip6=[ { address = "2a03:4000:6:1b3::1000"; prefixLength = 64; } { address = "2a03:4000:6:1b3::2000"; prefixLength = 64; } { address = "2a03:4000:6:1b3::3000"; prefixLength = 64; } ];
     };
 }

@@ -22,7 +22,7 @@
          };
     in
     {
-        environment.systemPackages = with pkgs; [htop emacs24-nox];
+        environment.systemPackages = with pkgs; [htop emacs24-nox wget];
 
 	networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 	networking.firewall.allowPing = true;
@@ -30,7 +30,8 @@
         services.nginx.enable = true;
         services.nginx.httpConfig = ''
 	    server {
-	      listen 443 ssl;
+	      listen 0.0.0.0:443 ssl;
+      	      listen [2a03:4000:6:1b3::3000]:443 ssl;
 	      server_name www.gonimo.com;
 	      ssl_certificate /var/lib/acme/www.gonimo.com/fullchain.pem;
 	      ssl_certificate_key /var/lib/acme/www.gonimo.com/key.pem;
@@ -42,7 +43,8 @@
 	    }
 
    	    server {
-	      listen 443 ssl;
+	      listen 0.0.0.0:443 ssl;
+       	      listen [2a03:4000:6:1b3::2000]:443 ssl;
 	      server_name gonimo.com;
 	      ssl_certificate /var/lib/acme/gonimo.com/fullchain.pem;
 	      ssl_certificate_key /var/lib/acme/gonimo.com/key.pem;
@@ -51,8 +53,9 @@
 	    }
 	      
    	    server {
-	      listen 443 ssl;
-	      server_name baby.gonimo.com;
+	      listen 0.0.0.0:443 ssl;
+      	      listen [2a03:4000:6:1b3::1000]:443 ssl;
+      	      server_name baby.gonimo.com;
 	      ssl_certificate /var/lib/acme/baby.gonimo.com/fullchain.pem;
 	      ssl_certificate_key /var/lib/acme/baby.gonimo.com/key.pem;
 	      add_header Strict-Transport-Security "max-age=604800";
@@ -60,7 +63,7 @@
 	    }
 	      
             server {
-              listen 80;
+              listen [::]:80 ipv6only=off;
               server_name www.gonimo.com;
 
 	      location / {
