@@ -6,13 +6,13 @@
       stdenv = pkgs.stdenv;
       fetchurl = pkgs.fetchurl;
       gonimo-front-compiled =
-        let version = "0.1";
+        let version = "0.1.001";
         in
         stdenv.mkDerivation {
             name = "gonimo-front-${version}";
             src = fetchurl {
-              url = "https://github.com/gonimo/gonimo-front-compiled/archive/v${version}.tar.gz";
-              sha256 = "8271cde58da08b7a8aebe5fa59a6624297c8af0e0d51de96f7682ce0b20f42a2";
+              url = "https://codeload.github.com/gonimo/gonimo-front-compiled/tar.gz/v${version}";
+              sha256 = "ada9c0a307c13089e349ccf61e03319f908b4f47982299d9195a94693b9d6c03";
             };
             installPhase = ''
               mkdir $out
