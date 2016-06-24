@@ -11,8 +11,8 @@
         stdenv.mkDerivation {
             name = "gonimo-front-${version}";
             src = fetchurl {
-              url = "https://codeload.github.com/gonimo/gonimo-front-compiled/tar.gz/v${version}";
-              sha256 = "ada9c0a307c13089e349ccf61e03319f908b4f47982299d9195a94693b9d6c03";
+              url = "https://github.com/gonimo/gonimo-front-compiled/archive/v${version}.tar.gz";
+              sha256 = "10izi5q54l2xn032vs95pc9k6m3pd14rf0l1galklgvlppk1qd0x";
             };
             installPhase = ''
               mkdir $out
