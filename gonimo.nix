@@ -20,6 +20,22 @@
             '';
             
          };
+      gonimo-website-compiled =
+        let version = "0.1";
+        in
+        stdenv.mkDerivation {
+            name = "gonimo-website-${version}";
+            src = fetchurl {
+              url = "https://github.com/gonimo/gonimo-website-compiled/archive/v${version}.tar.gz";
+              sha256 = "fd8ab14af93e7d519a84100259cecc936284e204a1c467be2810445aefebb997";
+            };
+            installPhase = ''
+              mkdir $out
+              cp -a * $out
+            '';
+            
+         };
+
     in
     {
         imports = [ ./gonimo-cfg-nagios.nix ./gonimo-cfg-letsencrypt.nix ./gonimo-cfg-postfix.nix ];
@@ -44,7 +60,7 @@
 	      #add_header Strict-Transport-Security "max-age=31536000";
 	      # (1 year); for now just one week (testing)
 	      add_header Strict-Transport-Security "max-age=604800";
-	      root ${gonimo-front-compiled};
+	      root ${gonimo-website-compiled};
 	    }
 
    	    server {
@@ -54,7 +70,7 @@
 	      ssl_certificate /var/lib/acme/gonimo.com/fullchain.pem;
 	      ssl_certificate_key /var/lib/acme/gonimo.com/key.pem;
 	      add_header Strict-Transport-Security "max-age=604800";
-	      root ${gonimo-front-compiled};
+	      root ${gonimo-website-compiled};
 	    }
 	      
    	    server {
