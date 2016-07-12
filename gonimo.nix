@@ -21,13 +21,13 @@
             
          };
       gonimo-website-compiled =
-        let version = "0.1";
+        let version = "0.2";
         in
         stdenv.mkDerivation {
             name = "gonimo-website-${version}";
             src = fetchurl {
               url = "https://github.com/gonimo/gonimo-website-compiled/archive/v${version}.tar.gz";
-              sha256 = "fd8ab14af93e7d519a84100259cecc936284e204a1c467be2810445aefebb997";
+              sha256 = "8c52794b414d7c3098afd400fb0693bb4d296888131b752db3f570d77bd773cf";
             };
             installPhase = ''
               mkdir $out
